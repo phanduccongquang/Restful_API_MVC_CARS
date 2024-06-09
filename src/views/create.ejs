@@ -1,0 +1,64 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Cars</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/listCars">Cars</a>
+        <a>--- </a>
+        <a class="company" href="/show">Car_company</a>
+        <a>--- </a>
+
+        <a class="create" href="/create">Create</a>
+        <a>--- </a>
+        <a class="create" href="/createMaf">Create_Maf</a>
+
+        <!-- <a href="#contact">Contact</a>
+        <a href="#about">About</a> -->
+    </div>
+    <div class="form">
+        <form action="/createCars" method="post">
+
+            <fieldset>
+                <legend>Form add new Cars</legend>
+
+                <div class="input-group">
+                    <label>Car_id: </label>
+                    <input type="text" name="car_id" />
+                </div>
+                <div class="input-group">
+                    <label>Model: </label>
+                    <input type="text" name="model" />
+                </div>
+                <div class="input-group">
+                    <label>Specifications: </label>
+                    <input type="text" name="specifications" />
+                </div>
+                <div class="input-group">
+                    <label>Price: </label>
+                    <input type="text" name="price" />
+                </div>
+                <div class="input-group">
+                    <label>Manufacturer_id: </label>
+                    <input type="text" name="manufacturer_id" />
+                </div>
+                <!-- <div class="input-group">
+                    <label>Name: </label>
+                    <input type="text" name="name" />
+                </div> -->
+                <div>
+                    <button Type="submit"> Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <!-- <div class=" formEdit "></div> -->
+
+</body>
+
+</html>

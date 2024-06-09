@@ -1,0 +1,86 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <h2>Cars</h2> -->
+    <div class="topnav">
+        <a class="active" href="/listCars">Cars</a>
+        <a>--- </a>
+        <a class="company" href="/show">Car_company</a>
+        <!-- <a href="#contact">Contact</a>
+        <a href="#about">About</a> -->
+    </div>
+
+
+    <table>
+        <tr>
+            <th>Id_car</th>
+            <th>Model</th>
+            <th>Specifications</th>
+            <th>Price</th>
+            <th>manufacturer_id</th>
+            <th>Name</th>
+
+
+
+        </tr>
+
+        <tr>
+            <% listUser.forEach(function(user,index) { %>
+        <tr>
+            <td>
+                <%=user.car_id%>
+                    <!-- <%=index%> -->
+            </td>
+            <td>
+                <%=user.model%>
+            </td>
+            <td>
+                <%=user.specifications%>
+            </td>
+            <td>
+                <%=user.price%>
+            </td>
+            <td>
+                <%=user.manufacturer_id%>
+            </td>
+            <td>
+                <%=user.name%>
+            </td>
+
+
+
+        </tr>
+        <% }); %>
+
+
+    </table>
+
+</body>
+
+</html>

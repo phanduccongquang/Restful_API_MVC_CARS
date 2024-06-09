@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update A Cars</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- <%= JSON.stringify(useEdit) %> -->
+    <div class="topnav">
+        <a class="active" href="/listCars">Cars</a>
+        <a>--- </a>
+        <a class="company" href="/show">Car_company</a>
+        <a>--- </a>
+        <a class="create" href="/create">Create</a>
+    </div>
+    <div class="form">
+        <form action="/updateMaf/<%= useEdit.manufacturer_id %>?_method=PUT" method="POST">
+
+            <fieldset>
+                <legend>Form update Maf</legend>
+
+
+                <div class="input-group">
+                    <label>Manufacturer_id: </label>
+                    <input type="text" name="manufacturer_id" value="<%= useEdit.manufacturer_id %>" />
+                </div>
+                <div class="input-group">
+                    <label>Name: </label>
+                    <input type="text" name="name" value="<%= useEdit.name %>" />
+                </div>
+
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+
+</html>

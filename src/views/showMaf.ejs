@@ -1,0 +1,88 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <h2>Cars</h2> -->
+    <div class="topnav">
+        <a class="active" href="/listCars">Cars</a>
+        <a>--- </a>
+        <a class="company" href="/show">Car_company</a>
+        <a>--- </a>
+
+        <a class="create" href="/create">Create</a>
+        <a>--- </a>
+        <a class="create" href="/createMaf">Create_Maf</a>
+        <!-- <a href="#contact">Contact</a>
+        <a href="#about">About</a> -->
+    </div>
+
+
+    <table>
+        <tr>
+
+            <th>manufacturer_id</th>
+            <th>Name</th>
+
+
+
+        </tr>
+
+        <tr>
+            <% listUser.forEach(function(user,index) { %>
+        <tr>
+
+            <td>
+                <%=user.manufacturer_id%>
+            </td>
+            <td>
+                <%=user.name%>
+            </td>
+            <td>
+                <div class="action-buttons">
+
+                    <a href="/updateMaf/<%=user.manufacturer_id%>">Edit_Maf</a>
+
+                    <!-- <button class="edit">Edit</button> -->
+                    <!-- <button class="delete">Delete</button> -->
+                    <form action="/deleteMaf/<%= user.manufacturer_id %>?_method=DELETE" method="POST"
+                        style="display:inline;">
+                        <button type="submit">Delete_Maf</button>
+                    </form>
+                </div>
+            </td>
+
+
+        </tr>
+        <% }); %>
+
+
+    </table>
+
+</body>
+
+</html>

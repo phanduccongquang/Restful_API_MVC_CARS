@@ -1,0 +1,18 @@
+/* Add a color to the active/current link */
+.topnav a.active {
+    font-size: 20px;
+    background-color: #04AA6D;
+    color: white;
+}
+
+.topnav a.company {
+    font-size: 20px;
+    background-color: #04AA6D;
+    color: white;
+}
+
+.topnav a.create {
+    font-size: 20px;
+    background-color: #04AA6D;
+    color: white;
+}
