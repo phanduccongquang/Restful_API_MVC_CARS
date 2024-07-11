@@ -16,3 +16,15 @@
     background-color: #04AA6D;
     color: white;
 }
+
+.logout-btn {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    background-color: #04AA6D;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    padding: 15px 20px;
+    /* Thêm padding để tăng kích thước nút */
+}

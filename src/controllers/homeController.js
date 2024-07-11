@@ -1,32 +1,25 @@
-const connection = require('../config/database')
+const connection = require('../models/database')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const { getDetailCars, getMaf, getCarID, getMafID,
-    updateCarByID, updateMafByID, deleteCarsByID, deleteMafByID, addCar, addMaf } = require('../services/CRUD')
+    updateCarByID, updateMafByID, deleteCarsByID, deleteMafByID,
+    addCar, addMaf, addUser } = require('../services/homeServices')
 
-// const getHomePage = (req, res) => {
-//     res.render('home.ejs')
-// }
+
 const showDetailCar = async (req, res) => {
-    // let [results, fields] = await connection.query('select * from cars');
-    // console.log("results", results);
+
     const carId = req.params.car_id;
     const data = await getDetailCars(carId)
-
-
-    // res.render('show.ejs', { listUser: data });
     res.json({ data: data })
 }
 const showMaf = async (req, res) => {
-
     const data = await getMaf();
-
     res.render('showMaf.ejs', { listUser: data });
 }
 const getCarById = async (req, res) => {
     const carId = req.params.car_id;
     const data = await getCarID(carId)
-    // res.render('update.ejs', { useEdit: data });
-    res.json({ data: data })
-
+    res.render('update.ejs', { useEdit: data })
 }
 const getMafById = async (req, res) => {
     const MafId = req.params.manufacturer_id;
@@ -41,35 +34,20 @@ const updateCars = async (req, res) => {
     let price = req.body.price;
     let manufacturer_id = req.body.manufacturer_id;
 
-
     await updateCarByID(model, specifications, price, manufacturer_id, car_id)
-    // res.redirect('/listCars');
-    res.json({ message: 'Car updated successfully' });
-
-
-
+    res.redirect('/listCars');
 }
 const updateMaf = async (req, res) => {
 
     let manufacturer_id = req.body.manufacturer_id;
     let name = req.body.name;
-
-
     await updateMafByID(name, manufacturer_id)
-
     res.redirect('/show');
-
-
-
 }
 const deleteCars = async (req, res) => {
     let car_id = req.params.car_id;
     await deleteCarsByID(car_id)
-
-    // res.redirect('/listCars');
-    res.json({ message: 'delete car successful' })
-
-
+    res.redirect('/listCars');
 }
 const deleteMaf = async (req, res) => {
     let Maf_id = req.params.Maf_id;
@@ -79,19 +57,96 @@ const deleteMaf = async (req, res) => {
 }
 
 const createCar = async (req, res) => {
-    // console.log("check req.body", req.body);
     let car_id = req.body.car_id;
     let model = req.body.model;
     let specifications = req.body.specifications;
     let price = req.body.price;
     let manufacturer_id = req.body.manufacturer_id;
 
-
     await addCar(car_id, model, specifications, price, manufacturer_id)
+    res.redirect('/listCars');
 
-    // res.redirect('/listCars');
-    res.json({ message: 'add car successfuly' })
+}
+const header = (req, res) => {
+    res.render('header.ejs')
+}
+const getsignup = (req, res) => {
+    res.render('register', {
+        messages: {}
+    });
+}
+const signup = async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    let repassword = req.body.repassword;
 
+    if (password !== repassword) {
+        return res.render('register', {
+            messages: { danger: 'Mật khẩu và xác nhận mật khẩu không khớp. Vui lòng nhập lại.' }
+        });
+    }
+
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await addUser(email, hashedPassword);
+        res.redirect('/login');
+    } catch (err) {
+        console.error('Error adding user:', err);
+        res.render('register', {
+            messages: { danger: 'Đã xảy ra lỗi trong quá trình đăng ký. Vui lòng thử lại.' }
+        });
+    }
+
+}
+const getlogin = (req, res) => {
+    res.render('login', {
+        messages: {}
+    });
+}
+const login = async (req, res) => {
+    let email = req.body.email
+    let password = req.body.password
+    try {
+        const [results] = await connection.query('SELECT * FROM user WHERE email = ?', [email]);
+
+        if (results.length === 0) {
+            return res.render('login', {
+                messages: { danger: 'Tên đăng nhập hoặc mật khẩu không chính xác' }
+            });
+        }
+
+        const user = results[0];
+        console.log('check', user);
+
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return res.render('login', {
+                messages: { danger: 'Tên đăng nhập hoặc mật khẩu không chính xác' }
+            });
+        }
+
+        const token = jwt.sign({ userId: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false
+        });
+
+        console.log("ddang nhap thanh cong");
+        let [data] = await connection.query('select * from cars');
+
+        res.render('home.ejs', { listUser: data });
+    } catch (err) {
+        console.error('Error logging in:', err);
+        res.render('login', {
+            messages: { danger: 'Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.' }
+        });
+    }
+};
+const logout = (req, res) => {
+    res.clearCookie('token')
+    res.redirect('/login')
 }
 
 const create = (req, res) => {
@@ -101,8 +156,6 @@ const createMaf = (req, res) => {
     res.render('createMaf.ejs')
 }
 const create_maf = async (req, res) => {
-    // console.log("check req.body", req.body);
-
     let manufacturer_id = req.body.manufacturer_id;
     let name = req.body.name;
 
@@ -137,7 +190,7 @@ const getAllcar = async () => {
 const GetCarWithMafAndPrice = async (req, res) => {
     var { manufacturer, price } = req.query;
     try {
-        var cars = await getAllcar(); // Gọi đúng tên hàm "getAllcars"
+        var cars = await getAllcar();
         console.log('check cars', cars);
         let filterCars = cars;
         if (manufacturer) {
@@ -145,12 +198,8 @@ const GetCarWithMafAndPrice = async (req, res) => {
         }
         if (price) {
             filterCars = filterCars.filter(car => car.price <= (price));
-        }
-        // console.log('chekc fitle', filterCars);
+        };
         res.render('ShowMafAndPrice.ejs', { listUser: filterCars });
-
-
-        // res.json({ cars: filterCars, error: "false" });
     } catch (err) {
         res.status(500).json({ error: "get cars data is error" });
     }
@@ -159,18 +208,13 @@ const GetCarWithMafAndPrice = async (req, res) => {
 const SearchCars = async (req, res) => {
     var { name } = req.query;
     try {
-        var cars = await getAllcar(); // Gọi đúng tên hàm "getAllcars"
+        var cars = await getAllcar();
         console.log('check cars', cars);
         let filterCars = cars;
         if (name) {
             filterCars = filterCars.filter(car => car.model === (name));
         }
-
-        // console.log('chekc fitle', filterCars);
         res.render('ShowMafAndPrice.ejs', { listUser: filterCars });
-
-
-        // res.json({ cars: filterCars, error: "false" });
     } catch (err) {
         res.status(500).json({ error: "get cars data is error" });
     }
@@ -182,5 +226,5 @@ module.exports = {
     getAllcars, showDetailCar, createCar, create,
     getCarById, updateCars, deleteCars, showMaf
     , createMaf, create_maf, getMafById, updateMaf, deleteMaf
-    , GetCarWithMafAndPrice, getAllcar, SearchCars
+    , GetCarWithMafAndPrice, getAllcar, SearchCars, signup, login, header, getlogin, getsignup, logout
 }

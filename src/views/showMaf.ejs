@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    <!-- <h2>Cars</h2> -->
+
     <div class="topnav">
         <a class="active" href="/listCars">Cars</a>
         <a>--- </a>
@@ -37,8 +37,7 @@
         <a class="create" href="/create">Create</a>
         <a>--- </a>
         <a class="create" href="/createMaf">Create_Maf</a>
-        <!-- <a href="#contact">Contact</a>
-        <a href="#about">About</a> -->
+
     </div>
 
 
@@ -67,8 +66,6 @@
 
                     <a href="/updateMaf/<%=user.manufacturer_id%>">Edit_Maf</a>
 
-                    <!-- <button class="edit">Edit</button> -->
-                    <!-- <button class="delete">Delete</button> -->
                     <form action="/deleteMaf/<%= user.manufacturer_id %>?_method=DELETE" method="POST"
                         style="display:inline;">
                         <button type="submit">Delete_Maf</button>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+</head>
+
+<body>
+    <%- include('./header'); %>
+        <!-- End Navbar Section -->
+
+        <br>
+
+        <% if (messages && messages.danger) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= messages.danger %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <% } %>
+
+                <div class="container mt-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Biểu Mẫu Đăng Ký
+                        </div>
+                        <div class="card-body">
+                            <form action="/signup" method="POST">
+                                <div class="form-group">
+                                    <label for="email">Email: </label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Mật khẩu: </label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="repassword">Xác nhận mật khẩu: </label>
+                                    <input type="password" class="form-control" id="repassword" name="repassword"
+                                        required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+</body>
+
+</html>

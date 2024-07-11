@@ -1,4 +1,5 @@
-const connection = require('../config/database')
+const connection = require('../models/database')
+
 
 const getDetailCars = async (carId) => {
     let [results, fields] = await connection.query(`
@@ -69,6 +70,13 @@ const addCar = async (car_id, model, specifications, price, manufacturer_id) => 
         , [car_id, model, specifications, price, manufacturer_id]
     );
 }
+const addUser = async (email, password) => {
+    const [results] = await connection.query(
+        `INSERT INTO user (email, password)VALUES ( ?,?)`
+        , [email, password]
+    );
+
+}
 const addMaf = async (manufacturer_id, name) => {
     const [results] = await connection.query(
         `INSERT INTO manufacturers (manufacturer_id,name)VALUES (?, ?)`
@@ -78,5 +86,5 @@ const addMaf = async (manufacturer_id, name) => {
 
 module.exports = {
     getDetailCars, getMaf, getCarID, getMafID,
-    updateCarByID, updateMafByID, deleteCarsByID, deleteMafByID, addCar, addMaf
+    updateCarByID, updateMafByID, deleteCarsByID, deleteMafByID, addCar, addMaf, addUser
 }

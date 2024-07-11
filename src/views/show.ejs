@@ -27,13 +27,11 @@
 </head>
 
 <body>
-    <!-- <h2>Cars</h2> -->
     <div class="topnav">
         <a class="active" href="/listCars">Cars</a>
         <a>--- </a>
         <a class="company" href="/show">Car_company</a>
-        <!-- <a href="#contact">Contact</a>
-        <a href="#about">About</a> -->
+
     </div>
 
 
@@ -55,7 +53,7 @@
         <tr>
             <td>
                 <%=user.car_id%>
-                    <!-- <%=index%> -->
+
             </td>
             <td>
                 <%=user.model%>
@@ -77,8 +75,6 @@
 
                     <a href="/update_maf/<%=user.car_id%>">Edit_Maf</a>
 
-                    <!-- <button class="edit">Edit</button> -->
-                    <!-- <button class="delete">Delete</button> -->
                     <form action="/delete_maf/<%= user.car_id %>?_method=DELETE" method="POST" style="display:inline;">
                         <button type="submit">Delete_Maf</button>
                     </form>
