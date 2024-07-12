@@ -69,6 +69,7 @@ const login = async (req, res) => {
         res.status(200).json({
             errorCode: 0,
             message: 'Đăng nhập thành công',
+            token: token
 
         });
     } catch (err) {
@@ -78,6 +79,16 @@ const login = async (req, res) => {
             message: 'Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.'
         });
     }
+};
+const authenticateToken = (req, res, next) => {
+    const token = req.cookies.token || req.headers['x-access-token'];
+    if (!token) return res.status(403).send('No token provided.');
+
+    jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
+        if (err) return res.status(500).send('Failed to authenticate token.');
+        req.userId = decoded.userId;
+        next();
+    });
 };
 const logout = (req, res) => {
     res.clearCookie('token');
@@ -239,6 +250,6 @@ const SearchCars = async (req, res) => {
 
 module.exports = {
     getAllcars, showDetailCar, createCar, updateCars, deleteCars, showMaf
-    , create_maf, updateMaf, deleteMaf
+    , create_maf, updateMaf, deleteMaf, authenticateToken
     , GetCarWithMafAndPrice, getAllcar, SearchCars, login, signup, logout
 }

@@ -144,6 +144,16 @@ const login = async (req, res) => {
         });
     }
 };
+const authenticateToken = (req, res, next) => {
+    const token = req.cookies.token || req.headers['x-access-token'];
+    if (!token) return res.status(403).send('No token provided.');
+
+    jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
+        if (err) return res.status(500).send('Failed to authenticate token.');
+        req.userId = decoded.userId;
+        next();
+    });
+};
 const logout = (req, res) => {
     res.clearCookie('token')
     res.redirect('/login')
@@ -226,5 +236,6 @@ module.exports = {
     getAllcars, showDetailCar, createCar, create,
     getCarById, updateCars, deleteCars, showMaf
     , createMaf, create_maf, getMafById, updateMaf, deleteMaf
-    , GetCarWithMafAndPrice, getAllcar, SearchCars, signup, login, header, getlogin, getsignup, logout
+    , GetCarWithMafAndPrice, getAllcar, SearchCars, signup,
+    login, header, getlogin, getsignup, logout, authenticateToken
 }
