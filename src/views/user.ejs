@@ -25,10 +25,11 @@
         }
     </style>
 </head>
+</head>
 
 <body>
     <div class="topnav">
-        <a class="active" href="#home">Cars</a>
+        <a class="active" href="/listCars">Cars</a>
         <a>--- </a>
         <a class="company" href="/show">Car_company</a>
         <a>--- </a>
@@ -41,42 +42,47 @@
         <a class="logout-btn" href="/logout">Logout</a> <!-- Logout button -->
 
     </div>
-
-
     <table>
         <tr>
-            <th>Id_car</th>
-            <th>Model</th>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Role_id</th>
+            <th>Name</th>
 
         </tr>
-
         <tr>
             <% listUser.forEach(function(user,index) { %>
         <tr>
             <td>
-                <%=user.car_id%>
+                <%=user.user_id%>
             <td>
-                <%=user.model%>
-            </td>
+                <%=user.email%>
+            <td>
+                <%=user.password%>
+            <td>
+                <%=user.role_id%>
+            <td>
+                <%=user.role_name%>
 
+            </td>
 
             <td>
                 <div class="action-buttons">
-                    <a href="/show/<%=user.car_id%>">show</a>
-                    <a href="/update/<%=user.car_id%>">Edit_Cars</a>
-                    <form action="/delete/<%= user.car_id %>?_method=DELETE" method="POST" style="display:inline;">
-                        <button type="submit">Delete_Cars</button>
+                    <a href="/updateUser/<%=user.user_id%>">updateUser</a>
+                    <form action="/deleteUser/<%= user.user_id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit">Delete_User</button>
                     </form>
 
                 </div>
             </td>
-
         </tr>
         <% }); %>
 
 
-    </table>
 
+
+    </table>
 </body>
 
 </html>

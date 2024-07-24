@@ -17,14 +17,20 @@
     color: white;
 }
 
+.topnav a.user {
+    font-size: 20px;
+    background-color: #04AA6D;
+    color: white;
+}
+
 .logout-btn {
     position: absolute;
     top: 0;
-    right: 20px;
+    right: 1px;
     background-color: #04AA6D;
     color: white;
     text-decoration: none;
-    font-size: 17px;
-    padding: 15px 20px;
+    font-size: 15px;
+    padding: 7px 12px;
     /* Thêm padding để tăng kích thước nút */
 }

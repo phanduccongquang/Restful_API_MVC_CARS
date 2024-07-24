@@ -33,6 +33,11 @@ const getCarID = async (carId) => {
     let user = results && results.length > 0 ? results[0] : {};
     return user
 }
+const getUserID = async (id) => {
+    let [results] = await connection.query('select * from user where id = ?', [id])
+    let user = results && results.length > 0 ? results[0] : {};
+    return user
+}
 const getMafID = async (MafId) => {
     let [results, fields] = await connection.query('select * from manufacturers where manufacturer_id = ?', [MafId]);
 
@@ -54,6 +59,14 @@ const updateMafByID = async (name, manufacturer_id) => {
         [name, manufacturer_id]
     );
 }
+const updateUserByID = async (role_id, id) => {
+    let [results] = await connection.query(`UPDATE user SET 
+        role_id=? WHERE id = ?`,
+        [role_id, id]
+    );
+
+}
+
 const deleteCarsByID = async (car_id) => {
     let [results] = await connection.query(`DELETE FROM car_management.cars WHERE car_id=?`,
         [car_id]
@@ -70,10 +83,10 @@ const addCar = async (car_id, model, specifications, price, manufacturer_id) => 
         , [car_id, model, specifications, price, manufacturer_id]
     );
 }
-const addUser = async (email, password) => {
+const addUser = async (email, password, role_id) => {
     const [results] = await connection.query(
-        `INSERT INTO user (email, password)VALUES ( ?,?)`
-        , [email, password]
+        `INSERT INTO user (email, password,role_id)VALUES ( ?,?,?)`
+        , [email, password, role_id]
     );
 
 }
@@ -86,5 +99,6 @@ const addMaf = async (manufacturer_id, name) => {
 
 module.exports = {
     getDetailCars, getMaf, getCarID, getMafID,
-    updateCarByID, updateMafByID, deleteCarsByID, deleteMafByID, addCar, addMaf, addUser
+    updateCarByID, updateMafByID, deleteCarsByID,
+    deleteMafByID, addCar, addMaf, addUser, getUserID, updateUserByID
 }

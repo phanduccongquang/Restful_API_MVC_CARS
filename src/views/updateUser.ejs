@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update A User</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- <%= JSON.stringify(useEdit) %> -->
+    <div class="topnav">
+        <a class="active" href="/listCars">Cars</a>
+        <a>--- </a>
+        <a class="company" href="/show">Car_company</a>
+        <a>--- </a>
+        <a class="create" href="/create">Create</a>
+    </div>
+    <div class="form">
+        <form action="/updateUser/<%= useEdit.id %>?_method=PATCH" method="POST">
+
+            <fieldset>
+                <legend>Form update User</legend>
+
+                <div class="input-group">
+                    <label>Role_id: </label>
+                    <input type="text" name="role_id" value="<%= useEdit.role_id %>" />
+                </div>
+
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+
+</html>
