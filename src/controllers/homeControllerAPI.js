@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { getDetailCars, getMaf,
     updateCarByID, updateMafByID, deleteCarsByID,
-    deleteMafByID, addCar, addMaf, addUser } = require('../services/homeServices')
+    deleteMafByID, addCar, addMaf, addUser, updateUserByID } = require('../services/homeServices')
 
 
 const signup = async (req, res) => {
@@ -59,7 +59,7 @@ const login = async (req, res) => {
             });
         }
 
-        const token = jwt.sign({ userId: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user.id, role: user.role_id }, 'your_jwt_secret', { expiresIn: '1h' });
 
         res.cookie('token', token, {
             httpOnly: true,
@@ -82,14 +82,44 @@ const login = async (req, res) => {
 };
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.token || req.headers['x-access-token'];
-    if (!token) return res.status(403).send('No token provided.');
+    if (!token) return res.status(403).json('No token provided.');
 
     jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-        if (err) return res.status(500).send('Failed to authenticate token.');
+        if (err) return res.status(500).json('Failed to authenticate token.');
         req.userId = decoded.userId;
+        req.userRole = decoded.role;
         next();
     });
 };
+const getRoleDetails = async (id) => {
+    try {
+        const [results] = await connection.query('SELECT * FROM role WHERE id = ?', [id]);
+
+        if (results.length === 0) {
+            throw new Error('Role not found.');
+        }
+        return results[0];
+    } catch (err) {
+        console.error('Error fetching role details:', err);
+        throw err;
+    }
+};
+const authorizeRole = (roles) => {
+    return async (req, res, next) => {
+        try {
+            const role = await getRoleDetails(req.userRole);
+
+            if (!roles.includes(role.name)) {
+                return res.status(403).json('Permission denied.');
+            }
+
+            next();
+        } catch (err) {
+            return res.status(500).json('Error fetching role details.');
+        }
+    };
+};
+
 const logout = (req, res) => {
     res.clearCookie('token');
     res.status(200).json({
@@ -139,6 +169,17 @@ const updateMaf = async (req, res) => {
         errorCode: 0,
         data: results
     })
+}
+const updateUser = async (req, res) => {
+    let id = req.params.id
+    let role_id = req.body.role_id;
+    await updateUserByID(role_id, id)
+
+    res.status(200).json({
+        errorCode: 0,
+        data: results
+    })
+
 }
 const deleteCars = async (req, res) => {
     let car_id = req.params.car_id;
@@ -210,7 +251,28 @@ const getAllcar = async () => {
     return results;
 
 }
+const getAlluser = async (req, res) => {
 
+    let [results, fields] = await connection.query(`
+        SELECT 
+            user.id AS user_id,
+            user.email,
+            user.password,
+            user.role_id,
+            role.id AS role_id,
+            role.name AS role_name
+        FROM 
+            user
+        JOIN 
+            role
+        ON 
+            user.role_id = role.id  `);
+    res.status(200).json({
+        errorCode: 0,
+        data: results
+    })
+
+}
 const GetCarWithMafAndPrice = async (req, res) => {
     var { manufacturer, price } = req.query;
     try {
@@ -251,5 +313,6 @@ const SearchCars = async (req, res) => {
 module.exports = {
     getAllcars, showDetailCar, createCar, updateCars, deleteCars, showMaf
     , create_maf, updateMaf, deleteMaf, authenticateToken
-    , GetCarWithMafAndPrice, getAllcar, SearchCars, login, signup, logout
+    , GetCarWithMafAndPrice, getAllcar, SearchCars, login,
+    signup, logout, authorizeRole, getAlluser, updateUser
 }
