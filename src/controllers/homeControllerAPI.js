@@ -20,7 +20,9 @@ const signup = async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        await addUser(email, hashedPassword);
+        const role_id = 2;
+
+        await addUser(email, hashedPassword, role_id);
         res.status(201).json({
             errorCode: 0,
             message: 'Đăng ký thành công'
@@ -173,7 +175,7 @@ const updateMaf = async (req, res) => {
 const updateUser = async (req, res) => {
     let id = req.params.id
     let role_id = req.body.role_id;
-    await updateUserByID(role_id, id)
+    let results = await updateUserByID(role_id, id)
 
     res.status(200).json({
         errorCode: 0,
@@ -299,12 +301,13 @@ const SearchCars = async (req, res) => {
         var cars = await getAllcar();
         let filterCars = cars;
         if (name) {
-            filterCars = filterCars.filter(car => car.model === (name));
+            name = name.trim().toLowerCase();
+            filterCars = filterCars.filter(car => car.model.trim().toLowerCase() === name);
         };
         res.status(200).json({
             errorCode: 0,
             data: filterCars
-        })
+        });
     } catch (err) {
         res.status(500).json({ error: "get cars data is error" });
     }

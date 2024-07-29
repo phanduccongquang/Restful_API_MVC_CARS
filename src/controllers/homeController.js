@@ -158,6 +158,7 @@ const login = async (req, res) => {
             messages: { danger: 'Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.' }
         });
     }
+
 };
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.token || req.headers['x-access-token'];
