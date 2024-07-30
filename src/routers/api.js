@@ -3,7 +3,7 @@ const { getAllcars, showDetailCar,
     createCar, updateCars,
     deleteCars, showMaf, create_maf, updateMaf,
     deleteMaf, GetCarWithMafAndPrice, SearchCars, login,
-    logout, signup, authenticateToken, authorizeRole, updateUser } = require('../controllers/homeControllerAPI')
+    logout, signup, authenticateToken, authorizeRole, updateUser, cacheMiddleware } = require('../controllers/homeControllerAPI')
 
 const routeAPI = express.Router()
 
@@ -128,7 +128,7 @@ routeAPI.post('/logout', authenticateToken, logout);
  *                   type: string
  *                   example: "Đăng xuất thất bại"
  */
-routeAPI.get('/listCars', authenticateToken, authorizeRole(['admin', 'user']), getAllcars);
+routeAPI.get('/listCars', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), getAllcars);
 /**
  * @swagger
  * /listCars:
@@ -146,7 +146,7 @@ routeAPI.get('/listCars', authenticateToken, authorizeRole(['admin', 'user']), g
  *                 $ref: '#/components/schemas/Car'
  * 
  */
-routeAPI.get('/show/:car_id', authenticateToken, authorizeRole(['admin', 'user']), showDetailCar);
+routeAPI.get('/show/:car_id', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), showDetailCar);
 /**
  * @swagger
  * /show/{car_id}:
@@ -171,7 +171,7 @@ routeAPI.get('/show/:car_id', authenticateToken, authorizeRole(['admin', 'user']
  *         description: Không tìm thấy xe
  * 
  */
-routeAPI.get('/show', authenticateToken, authorizeRole(['admin', 'user']), showMaf);
+routeAPI.get('/show', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), showMaf);
 /**
  * @swagger
  * /show:
@@ -188,7 +188,7 @@ routeAPI.get('/show', authenticateToken, authorizeRole(['admin', 'user']), showM
  *               items:
  *                 $ref: '#/components/schemas/Maf' 
  */
-routeAPI.get('/showCar/Maf_price', authenticateToken, authorizeRole(['admin', 'user']), GetCarWithMafAndPrice);
+routeAPI.get('/showCar/Maf_price', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), GetCarWithMafAndPrice);
 /**
  * @swagger
  * /showCar/Maf_price:
@@ -218,7 +218,7 @@ routeAPI.get('/showCar/Maf_price', authenticateToken, authorizeRole(['admin', 'u
  *       404:
  *         description: Không tìm thấy nhà sản xuất 
  */
-routeAPI.get('/search', authenticateToken, authorizeRole(['admin', 'user']), SearchCars);
+routeAPI.get('/search', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), SearchCars);
 /**
  * @swagger
  * /search:
