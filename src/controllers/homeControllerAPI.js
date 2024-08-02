@@ -7,14 +7,11 @@ const { getDetailCars, getMaf,
     deleteMafByID, addCar, addMaf, addUser, updateUserByID } = require('../services/homeServices')
 const redis = require('redis');
 
+
 let client;
 (async () => {
     client = redis.createClient({
-        // host: '127.0.0.1',
-        // port: 6379,
-        host: process.env.REDIS_HOST || 'localhost',
-        port: process.env.REDIS_PORT || 6379,
-        password: process.env.REDIS_PASSWORD || null
+        url: 'redis://default:vcFPM1p5KKj7zki4pLXhgsamkNx2dZeU@redis-15945.c12.us-east-1-4.ec2.redns.redis-cloud.com:15945'
     });
 
     client.on('error', (error) => console.log('Redis error: ' + error));
@@ -425,5 +422,5 @@ module.exports = {
     getAllcars, showDetailCar, createCar, updateCars, deleteCars, showMaf
     , create_maf, updateMaf, deleteMaf, authenticateToken
     , GetCarWithMafAndPrice, getAllcar, SearchCars, login,
-    signup, logout, authorizeRole, getAlluser, updateUser, cacheMiddleware, cacheMiddleware
+    signup, logout, authorizeRole, getAlluser, updateUser, cacheMiddleware
 }
