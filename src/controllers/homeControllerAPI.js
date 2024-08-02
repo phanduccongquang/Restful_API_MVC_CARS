@@ -1,6 +1,7 @@
 const connection = require('../models/database')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 const { getDetailCars, getMaf,
     updateCarByID, updateMafByID, deleteCarsByID,
     deleteMafByID, addCar, addMaf, addUser, updateUserByID } = require('../services/homeServices')
@@ -9,8 +10,11 @@ const redis = require('redis');
 let client;
 (async () => {
     client = redis.createClient({
-        host: '127.0.0.1',
-        port: 6379,
+        // host: '127.0.0.1',
+        // port: 6379,
+        host: process.env.REDIS_HOST || 'localhost',
+        port: process.env.REDIS_PORT || 6379,
+        password: process.env.REDIS_PASSWORD || null
     });
 
     client.on('error', (error) => console.log('Redis error: ' + error));
