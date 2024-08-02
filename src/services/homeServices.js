@@ -79,7 +79,7 @@ const deleteMafByID = async (Maf_id) => {
 }
 const addCar = async (car_id, model, specifications, price, manufacturer_id) => {
     const [results] = await connection.query(
-        `INSERT INTO Cars (car_id, model, specifications,price,manufacturer_id)VALUES (?, ?, ?,?,?)`
+        `INSERT INTO cars (car_id, model, specifications,price,manufacturer_id)VALUES (?, ?, ?,?,?)`
         , [car_id, model, specifications, price, manufacturer_id]
     );
 }
