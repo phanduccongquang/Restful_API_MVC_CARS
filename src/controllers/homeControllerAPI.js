@@ -227,8 +227,7 @@ const updateMaf = async (req, res) => {
     let name = req.body.name;
     try {
         let results = await updateMafByID(name, manufacturer_id);
-        // Xóa cache liên quan đến nhà sản xuất
-        await client.del('/v1/show'); // Hoặc key cụ thể nếu có
+        await client.del('/v1/show');
         res.status(200).json({
             errorCode: 0,
             data: results
@@ -244,11 +243,20 @@ const updateMaf = async (req, res) => {
 const updateUser = async (req, res) => {
     let id = req.params.id
     let role_id = req.body.role_id;
-    let results = await updateUserByID(role_id, id)
-    res.status(200).json({
-        errorCode: 0,
-        data: results
-    })
+    try {
+        let results = await updateUserByID(role_id, id)
+        await client.del('/v1/listUser');
+        res.status(200).json({
+            errorCode: 0,
+            data: results
+        })
+    } catch (error) {
+        console.error('Error updating user:', err);
+        res.status(500).json({
+            errorCode: 1,
+            message: 'Có lỗi xảy ra khi cập nhật user.'
+        });
+    }
 
 }
 const deleteCars = async (req, res) => {
