@@ -3,7 +3,7 @@ const { getAllcars, showDetailCar,
     createCar, updateCars,
     deleteCars, showMaf, create_maf, updateMaf,
     deleteMaf, GetCarWithMafAndPrice, SearchCars, login,
-    logout, signup, authenticateToken, authorizeRole, updateUser, cacheMiddleware } = require('../controllers/homeControllerAPI')
+    logout, signup, authenticateToken, authorizeRole, updateUser, cacheMiddleware, getAlluser } = require('../controllers/homeControllerAPI')
 
 const routeAPI = express.Router()
 
@@ -41,11 +41,11 @@ const routeAPI = express.Router()
  *           type: string
  *           description: ID của nhà sản xuất
  *       example:
- *         car_id: 1
- *         model: Toyota Camry
+ *         car_id: h1
+ *         model: honda city
  *         specifications: Full option
  *         price: 30000
- *         manufacturer_id: 1
+ *         manufacturer_id: H
  * 
  *     Maf:
  *       type: object
@@ -59,8 +59,8 @@ const routeAPI = express.Router()
  *           type: string
  *           description: Tên nhà sản xuất
  *       example:
- *         manufacturer_id: 1
- *         name: Toyota
+ *         manufacturer_id: H
+ *         name: Honda
  * 
  *     User:
  *       type: object
@@ -84,7 +84,7 @@ const routeAPI = express.Router()
  *       example:
  *         email: lanh@gmail.com
  *         password: "123"
- *         repassword: "123"
+ *         repassword: "123"     
  */
 
 /**
@@ -127,6 +127,24 @@ routeAPI.post('/logout', authenticateToken, logout);
  *                 error:
  *                   type: string
  *                   example: "Đăng xuất thất bại"
+ */
+routeAPI.get('/listUser', authenticateToken, cacheMiddleware(3600), getAlluser)
+/**
+ * @swagger
+ * /listUser:
+ *   get:
+ *     summary: Lấy danh sách tất User
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Danh sách User
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ * 
  */
 routeAPI.get('/listCars', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), getAllcars);
 /**
@@ -410,7 +428,7 @@ routeAPI.patch('/updateUser/:id', authenticateToken, updateUser)
  * @swagger
  * /updateUser/{id}:
  *   patch:
- *     summary: Cập nhật role User
+ *     summary: Cập nhật role User (role_id = "admin"/"user")
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -478,8 +496,6 @@ routeAPI.delete('/deleteMaf/:Maf_id', authenticateToken, authorizeRole(['admin']
  *       404:
  *         description: Không tìm thấy nhà sản xuất 
  */
-
-
 
 
 module.exports = routeAPI
