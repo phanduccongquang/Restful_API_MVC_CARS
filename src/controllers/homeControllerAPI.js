@@ -260,7 +260,7 @@ const updateUser = async (req, res) => {
 
 }
 const deleteCars = async (req, res) => {
-    let car_id = req.params.car_id;
+    let car_id = req.query.car_id;
     try {
         await deleteCarsByID(car_id)
         const result = await client.del('/v1/listCars');
@@ -283,7 +283,7 @@ const deleteCars = async (req, res) => {
     }
 }
 const deleteMaf = async (req, res) => {
-    let Maf_id = req.params.Maf_id;
+    let Maf_id = req.query.Maf_id;
     try {
         await deleteMafByID(Maf_id)
         await client.del('/v1/show');
