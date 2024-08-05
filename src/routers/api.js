@@ -211,7 +211,7 @@ routeAPI.get('/showCar/Maf_price', authenticateToken, authorizeRole(['admin', 'u
  * @swagger
  * /showCar/Maf_price:
  *   get:
- *     summary: Lấy thông tin nhà sản xuất theo ID
+ *     summary: Lấy thông tin xe theo ID nhà sản xuất và giá tiền
  *     tags: [Cars]
  *     parameters:
  *       - in: query

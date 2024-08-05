@@ -303,37 +303,50 @@ const createCar = async (req, res) => {
     let specifications = req.body.specifications;
     let price = req.body.price;
     let manufacturer_id = req.body.manufacturer_id;
+    try {
+        let results = await addCar(car_id, model, specifications, price, manufacturer_id)
+        await client.del('/v1/listCars');
+        res.status(200).json({
+            errorCode: 0,
+            data: results
+        })
+    } catch (error) {
+        console.error('Error create car:', error);
+        res.status(500).json({
+            errorCode: 1,
+            message: "error when create"
+        })
 
-    let results = await addCar(car_id, model, specifications, price, manufacturer_id)
-    res.status(200).json({
-        errorCode: 0,
-        data: results
-    })
+    }
 
 }
 
 const create_maf = async (req, res) => {
     let manufacturer_id = req.body.manufacturer_id;
     let name = req.body.name;
-
-    let results = await addMaf(manufacturer_id, name)
-
-    res.status(200).json({
-        errorCode: 0,
-        data: results
-    })
+    try {
+        let results = await addMaf(manufacturer_id, name)
+        await client.del('/v1/show');
+        res.status(200).json({
+            errorCode: 0,
+            data: results
+        })
+    } catch (error) {
+        console.error('Error create Maf:', error);
+        res.status(500).json({
+            errorCode: 1,
+            message: "error when create"
+        })
+    }
 
 }
 const getAllcars = async (req, res) => {
     try {
-        // Thực hiện truy vấn
         const [results] = await connection.query('SELECT * FROM cars');
-
-        // Xử lý và trả kết quả
         console.log('check result', results);
         res.status(200).json({
             errorCode: 0,
-            data: results // Dữ liệu đã được lấy từ bảng cars
+            data: results
         });
     } catch (error) {
         console.error('Error executing query', error);
