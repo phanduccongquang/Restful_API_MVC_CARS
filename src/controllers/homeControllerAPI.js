@@ -263,19 +263,14 @@ const deleteCars = async (req, res) => {
     let car_id = req.params.car_id;
     try {
         await deleteCarsByID(car_id)
-        const result = await client.del('/v1/listCars');
-
-        if (result === 1) {
-            console.log('Cache cleared successfully');
-        } else {
-            console.log('Cache key not found');
-        }
+        await client.del('/v1/listCars');
         res.status(200).json({
             errorCode: 0,
             message: 'delete successfully'
         })
     }
     catch (error) {
+        console.error('Error deleting car:', error);
         res.status(500).json({
             errorCode: 1,
             message: "error when delete"
@@ -293,6 +288,7 @@ const deleteMaf = async (req, res) => {
         })
     }
     catch (error) {
+        console.error('Error deleting Maf:', error);
         res.status(500).json({
             errorCode: 1,
             message: "error when delete"
