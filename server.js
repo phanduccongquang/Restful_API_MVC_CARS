@@ -6,7 +6,14 @@ const apiRoure = require('./src/routers/api')
 const configTemplate = require('./src/models/templateViewEngine')
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser')
+const cors = require('cors');
 
+
+app.use(cors({
+    origin: 'https://resfulapi-mvc-3.onrender.com', // Đảm bảo đúng với domain của bạn
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 bodyParser = require("body-parser"),
     swaggerJsdoc = require("swagger-jsdoc"),
