@@ -45,7 +45,7 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:3000/v1",
+                url: "https://localhost:3000/v1",
             },
         ],
         components: {
