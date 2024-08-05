@@ -456,7 +456,7 @@ routeAPI.patch('/updateUser/:id', authenticateToken, updateUser)
  *         description: Lỗi server 
  */
 
-routeAPI.delete('/delete', authenticateToken, authorizeRole(['admin']), deleteCars);
+routeAPI.delete('/delete/:car_id', authenticateToken, authorizeRole(['admin']), deleteCars);
 /**
  * @swagger
  * /delete/{car_id}:
@@ -476,7 +476,7 @@ routeAPI.delete('/delete', authenticateToken, authorizeRole(['admin']), deleteCa
  *       404:
  *         description: Không tìm thấy xe 
  */
-routeAPI.delete('/deleteMaf', authenticateToken, authorizeRole(['admin']), deleteMaf);
+routeAPI.delete('/deleteMaf/:Maf_id', authenticateToken, authorizeRole(['admin']), deleteMaf);
 /**
  * @swagger
  * /deleteMaf/{Maf_id}:
