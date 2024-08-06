@@ -68,12 +68,12 @@ const updateUserByID = async (role_id, id) => {
 }
 
 const deleteCarsByID = async (car_id) => {
-    let [results] = await connection.query(`DELETE FROM car_management.cars WHERE car_id=?`,
+    let [results] = await connection.query(`DELETE FROM cars WHERE car_id=?`,
         [car_id]
     );
 }
 const deleteMafByID = async (Maf_id) => {
-    let [results] = await connection.query(`DELETE FROM car_management.manufacturers WHERE manufacturer_id=?`,
+    let [results] = await connection.query(`DELETE FROM manufacturers WHERE manufacturer_id=?`,
         [Maf_id]
     );
 }
