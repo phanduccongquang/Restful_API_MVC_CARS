@@ -1,0 +1,139 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/cars">Cars</a>
+        <a>--- </a>
+        <a class="company" href="/brands">Brands</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
+
+    </div>
+
+
+    <table>
+        <tr>
+            <th>Id_car</th>
+            <th>Brand_id</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Price</th>
+            <th>Conditions</th>
+            <th>Type</th>
+
+
+
+        </tr>
+
+        <tr>
+            <% listUser.forEach(function(user,index) { %>
+        <tr>
+            <td>
+                <%=user.car_id%>
+
+            </td>
+            <td>
+                <%=user.brand_id%>
+            </td>
+            <td>
+                <%=user.model%>
+            </td>
+            <td>
+                <%=user.year%>
+            </td>
+            <td>
+                <%=user.price%>
+            </td>
+            <td>
+                <%=user.conditions%>
+            </td>
+            <td>
+                <%=user.type%>
+            </td>
+            <td>
+                <div class="action-buttons">
+                    <a href="/show/<%=user.car_id%>">show</a>
+                    <a href="/updateCar/<%=user.car_id%>">Edit_Cars</a>
+                    <form action="/deleteCar/<%= user.car_id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit">Delete_Cars</button>
+                    </form>
+                    <form action="/addShoppingCart" method="POST">
+                        <input type="hidden" name="car_id" value="<%= user.car_id %>">
+                        <input type="number" name="quantity" value="1">
+                        <button type="submit">Thêm vào giỏ hàng</button>
+                    </form>
+
+                    <a href="/addReviews/<%= user.car_id %>">
+                        <button type="button">Reviews</button>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% listReviews.forEach(function(review) { %>
+                        <tr>
+                            <td>
+                                <%= review.user_id %>
+                            </td>
+                            <td>
+                                <%= review.rating %>
+                            </td>
+                            <td>
+                                <%= review.comment %>
+                            </td>
+                            <td>
+                                <%= review.created_at %>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="/updateReview/<%= review.review_id %>">Edit</a>
+                                    <form action="/deleteReview/<%= review.review_id %>?_method=DELETE" method="POST">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </table>
+            </td>
+        </tr>
+        <% }); %>
+    </table>
+</body>
+
+</html>

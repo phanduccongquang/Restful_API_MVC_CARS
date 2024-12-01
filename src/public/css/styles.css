@@ -17,6 +17,12 @@
     color: white;
 }
 
+.topnav a.cart {
+    font-size: 20px;
+    background-color: #04AA6D;
+    color: white;
+}
+
 .topnav a.user {
     font-size: 20px;
     background-color: #04AA6D;

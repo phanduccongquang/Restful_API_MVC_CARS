@@ -27,23 +27,26 @@
 </head>
 
 <body>
-    <!-- <h2>Cars</h2> -->
+
     <div class="topnav">
-        <a class="active" href="/listCars">Cars</a>
+        <a class="active" href="/cars">Cars</a>
         <a>--- </a>
-        <a class="company" href="/show">Car_company</a>
-        <!-- <a href="#contact">Contact</a>
-        <a href="#about">About</a> -->
+        <a class="company" href="/brands">Brands</a>
+        <a>--- </a>
+
+        <a class="create" href="/create_car">Create_cars</a>
+        <a>--- </a>
+        <a class="create" href="/create_brands">Create_brands</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
+
     </div>
 
 
     <table>
         <tr>
-            <th>Id_car</th>
-            <th>Model</th>
-            <th>Specifications</th>
-            <th>Price</th>
-            <th>manufacturer_id</th>
+
+            <th>Brand_id</th>
             <th>Name</th>
 
 
@@ -53,26 +56,25 @@
         <tr>
             <% listUser.forEach(function(user,index) { %>
         <tr>
+
             <td>
-                <%=user.car_id%>
-                    <!-- <%=index%> -->
-            </td>
-            <td>
-                <%=user.model%>
-            </td>
-            <td>
-                <%=user.specifications%>
-            </td>
-            <td>
-                <%=user.price%>
-            </td>
-            <td>
-                <%=user.manufacturer_id%>
+                <%=user.brand_id%>
             </td>
             <td>
                 <%=user.name%>
             </td>
+            <td>
+                <div class="action-buttons">
 
+                    <a href="/updateBrand/<%=user.brand_id%>">Edit_Brand</a>
+
+                    <form action="/deleteBrand/<%= user.brand_id %>?_method=DELETE" method="POST"
+                        style="display:inline;">
+                        <button type="submit">Delete_Brand</button>
+                    </form>
+
+                </div>
+            </td>
 
 
         </tr>

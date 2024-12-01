@@ -11,5 +11,12 @@ const connection = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0
 });
-
+connection.getConnection()
+    .then(conn => {
+        console.log("kết nối database thành công");
+        conn.release();
+    })
+    .catch(err => {
+        console.log("kết nối thất bại", err.message);
+    })
 module.exports = connection

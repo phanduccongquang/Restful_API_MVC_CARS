@@ -29,26 +29,30 @@
 
 <body>
     <div class="topnav">
-        <a class="active" href="/listCars">Cars</a>
+        <a class="active" href="/cars">Cars</a>
         <a>--- </a>
-        <a class="company" href="/show">Car_company</a>
+        <a class="company" href="/brands">Brands</a>
         <a>--- </a>
 
-        <a class="create" href="/create">Create</a>
+        <a class="create" href="/create_car">Create_cars</a>
         <a>--- </a>
-        <a class="create" href="/createMaf">Create_Maf</a>
+        <a class="create" href="/create_brands">Create_brands</a>
         <a>--- </a>
         <a class="user" href="/user">User</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
         <a class="logout-btn" href="/logout">Logout</a> <!-- Logout button -->
 
     </div>
     <table>
         <tr>
             <th>ID</th>
+            <th>Name</th>
             <th>Email</th>
             <th>Password</th>
+            <th>Phone</th>
+            <th>Address</th>
             <th>Role_id</th>
-            <th>Name</th>
 
         </tr>
         <tr>
@@ -57,11 +61,20 @@
             <td>
                 <%=user.user_id%>
             <td>
+                <%=user.name%>
+            <td>
                 <%=user.email%>
             <td>
                 <%=user.password%>
             <td>
-                <%=user.role_id%>
+                <%=user.phone%>
+
+            </td>
+            <td>
+                <%=user.address%>
+
+            </td>
+
             <td>
                 <%=user.role_name%>
 

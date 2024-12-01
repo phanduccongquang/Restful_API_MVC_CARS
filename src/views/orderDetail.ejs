@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Đơn Hàng</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .section-title {
+            margin-top: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Chi Tiết Đơn Hàng</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Đơn Hàng</th>
+                <th>Ngày Tạo</th>
+                <th>Trạng Thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <%= order.order_id %>
+                </td>
+                <td>
+                    <%= order.created_at %>
+                </td>
+                <td>
+                    <%= order.status %>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">Chi Tiết Mặt Hàng</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tên xe</th>
+                <th>Số lượng</th>
+                <th>Model</th>
+                <th>Tình trạng</th>
+                <th>Giá</th>
+                <th>Tổng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orderItems.forEach(function(item) { %>
+                <tr>
+                    <td>
+                        <%= item.type %>
+                    </td>
+                    <td>
+                        <%= item.quantity %>
+                    </td>
+                    <td>
+                        <%= item.model %>
+                    </td>
+                    <td>
+                        <%= item.conditions %>
+                    </td>
+                    <td>
+                        <%= item.price %>
+                    </td>
+                    <td>
+                        <%= item.quantity * item.price %>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+    <h2 class="section-title">Cập Nhật Trạng Thái Đơn Hàng</h2>
+    <div class="form-container">
+        <form action="/updateOrderStatus/<%= order.order_id %>?_method=PUT" method="POST"> <label for="status">Chọn
+                trạng thái mới:</label>
+            <select name="status" id="status" required>
+                <option value="processing" <% if (order.status==='processing' ) { %>selected<% } %>>Đang xử lý</option>
+                <option value="shipped" <% if (order.status==='shipped' ) { %>selected<% } %>>Đã giao</option>
+                <option value="delivered" <% if (order.status==='delivered' ) { %>selected<% } %>>Đã nhận</option>
+                <option value="canceled" <% if (order.status==='canceled' ) { %>selected<% } %>>Đã hủy</option>
+            </select>
+            <button type="submit">Cập Nhật Trạng Thái</button>
+        </form>
+    </div>
+    <form action="/payments/<%= order.order_id %>" method="POST">
+        <button type="submit">Thanh toán</button>
+    </form>
+
+
+    <a href="/getOrders">Quay lại danh sách đơn hàng</a>
+</body>
+
+</html>

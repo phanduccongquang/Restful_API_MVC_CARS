@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/cars">Cars</a>
+        <a>--- </a>
+        <a class="company" href="/brands">Brands</a>
+
+
+    </div>
+
+    <h1>Giỏ hàng của bạn</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tên xe</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Model</th>
+                <th>Tình trạng</th>
+                <th>Tổng</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let totalAmount=0; %>
+                <% cartItems.forEach(function(item) { %>
+                    <tr>
+                        <td>
+                            <%= item.type %>
+                        </td>
+                        <td>
+                            <%= item.quantity %>
+                        </td>
+                        <td>
+                            <%= item.price %>
+                        </td>
+                        <td>
+                            <%= item.model %>
+                        </td>
+                        <td>
+                            <%= item.conditions %>
+                        </td>
+                        <td>
+                            <%= item.quantity * item.price %>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="/updateShoppingCart/<%=item.car_id%>">Cập nhật số lượng</a>
+                                <form action="/deleteShoppingCart/<%= item.car_id %>?_method=DELETE" method="POST"
+                                    style="display:inline;">
+                                    <button type="submit">Xóa khỏi giỏ hàng</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <% totalAmount +=item.quantity * item.price; %>
+                        <% }); %>
+                            <tr class="total-row">
+                                <td colspan="5">Tổng Số Tiền:</td>
+                                <td colspan="2">
+                                    <%= totalAmount %>
+                                </td>
+                            </tr>
+        </tbody>
+    </table>
+
+    <form id="createOrderForm" action="/createOrder" method="POST">
+        <button type="submit">Tạo Đơn Hàng</button>
+    </form>
+
+
+    <button id="viewOrdersButton">Xem Danh Sách Đơn Hàng</button>
+
+    <div id="orderSuccessMessage" style="display: none;">
+        Đơn hàng đã được tạo thành công!
+    </div>
+
+    <div id="orderList" style="display: none;">
+        <!-- Danh sách đơn hàng sẽ được hiển thị ở đây -->
+    </div>
+
+    <script>
+        document.getElementById('createOrderForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            try {
+                const response = await fetch('/createOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    document.getElementById('orderSuccessMessage').style.display = 'block';
+                    document.getElementById('createOrderForm').style.display = 'none'; // Ẩn nút tạo đơn hàng sau khi thành công
+                } else {
+                    const error = await response.json();
+                    alert('Lỗi: ' + error.error);
+                }
+            } catch (error) {
+                console.error('Lỗi khi tạo đơn hàng:', error);
+                alert('Có lỗi xảy ra, vui lòng thử lại sau.');
+            }
+        });
+
+        document.getElementById('viewOrdersButton').addEventListener('click', () => {
+            window.location.href = '/getOrders'; // Chuyển hướng đến trang danh sách đơn hàng
+        });
+    </script>
+</body>
+
+</html>

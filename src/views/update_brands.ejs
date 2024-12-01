@@ -11,22 +11,24 @@
 <body>
     <!-- <%= JSON.stringify(useEdit) %> -->
     <div class="topnav">
-        <a class="active" href="/listCars">Cars</a>
+        <a class="active" href="/cars">Cars</a>
         <a>--- </a>
-        <a class="company" href="/show">Car_company</a>
+        <a class="company" href="/brands">Brands</a>
         <a>--- </a>
-        <a class="create" href="/create">Create</a>
+        <a class="create" href="/create_car">Create_cars</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
     </div>
     <div class="form">
-        <form action="/updateMaf/<%= useEdit.manufacturer_id %>?_method=PUT" method="POST">
+        <form action="/updateBrand/<%= useEdit.brand_id %>?_method=PUT" method="POST">
 
             <fieldset>
-                <legend>Form update Maf</legend>
+                <legend>Form update Brands</legend>
 
 
                 <div class="input-group">
-                    <label>Manufacturer_id: </label>
-                    <input type="text" name="manufacturer_id" value="<%= useEdit.manufacturer_id %>" />
+                    <label>Brand_id: </label>
+                    <input type="text" name="brand_id" value="<%= useEdit.brand_id %>" />
                 </div>
                 <div class="input-group">
                     <label>Name: </label>

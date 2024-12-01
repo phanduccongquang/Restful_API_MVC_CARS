@@ -11,14 +11,16 @@
 <body>
     <!-- <%= JSON.stringify(useEdit) %> -->
     <div class="topnav">
-        <a class="active" href="/listCars">Cars</a>
+        <a class="active" href="/cars">Cars</a>
         <a>--- </a>
-        <a class="company" href="/show">Car_company</a>
+        <a class="company" href="/brands">Brands</a>
         <a>--- </a>
-        <a class="create" href="/create">Create</a>
+        <a class="create" href="/create_cars">Create_cars</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
     </div>
     <div class="form">
-        <form action="/update/<%= useEdit.car_id %>?_method=PUT" method="POST">
+        <form action="/updateCar/<%= useEdit.car_id %>?_method=PUT" method="POST">
 
             <fieldset>
                 <legend>Form update new Cars</legend>
@@ -28,20 +30,28 @@
                     <input type="text" name="car_id" value="<%= useEdit.car_id %>" />
                 </div>
                 <div class="input-group">
+                    <label>Brand_id: </label>
+                    <input type="text" name="brand_id" value="<%= useEdit.brand_id %>" />
+                </div>
+                <div class="input-group">
                     <label>Model: </label>
                     <input type="text" name="model" value="<%= useEdit.model %>" />
                 </div>
                 <div class="input-group">
-                    <label>Specifications: </label>
-                    <input type="text" name="specifications" value="<%= useEdit.specifications %>" />
+                    <label>Year: </label>
+                    <input type="text" name="year" value="<%= useEdit.year %>" />
                 </div>
                 <div class="input-group">
                     <label>Price: </label>
                     <input type="text" name="price" value="<%= useEdit.price %>" />
                 </div>
                 <div class="input-group">
-                    <label>Manufacturer_id: </label>
-                    <input type="text" name="manufacturer_id" value="<%= useEdit.manufacturer_id %>" />
+                    <label>Conditions: </label>
+                    <input type="text" name="conditions" value="<%= useEdit.conditions %>" />
+                </div>
+                <div class="input-group">
+                    <label>Type: </label>
+                    <input type="text" name="type" value="<%= useEdit.type %>" />
                 </div>
 
                 <div>

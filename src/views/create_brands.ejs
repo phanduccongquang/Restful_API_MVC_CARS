@@ -9,25 +9,27 @@
 
 <body>
     <div class="topnav">
-        <a class="active" href="/listCars">Cars</a>
+        <a class="active" href="/cars">Cars</a>
         <a>--- </a>
-        <a class="company" href="/show">Car_company</a>
+        <a class="company" href="/brands">Brands</a>
         <a>--- </a>
 
-        <a class="create" href="/create">Create</a>
+        <a class="create" href="/create_car">Create_cars</a>
         <a>--- </a>
-        <a class="create" href="/createMaf">Create_Maf</a>
+        <a class="create" href="/create_brands">Create_brands</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
     </div>
     <div class="form">
-        <form action="/createMaf" method="post">
+        <form action="/create_brands" method="post">
 
             <fieldset>
                 <legend>Form add new Maf</legend>
 
 
                 <div class="input-group">
-                    <label>Manufacturer_id: </label>
-                    <input type="text" name="manufacturer_id" />
+                    <label>Brand_id: </label>
+                    <input type="text" name="brand_id" />
                 </div>
                 <div class="input-group">
                     <label>Name: </label>

@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Car Management</title>
     <link rel="stylesheet" href="/css/styles.css">
 
     <style>
@@ -23,58 +24,96 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+        .filter-form {
+            margin: 20px 0;
+        }
+
+        .filter-form input {
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        .filter-form button {
+            padding: 8px 16px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .filter-form button:hover {
+            background-color: #039e5c;
+        }
     </style>
 </head>
 
 <body>
     <div class="topnav">
         <a class="active" href="#home">Cars</a>
-        <a>--- </a>
-        <a class="company" href="/show">Car_company</a>
-        <a>--- </a>
-
-        <a class="create" href="/create">Create</a>
-        <a>--- </a>
-        <a class="create" href="/createMaf">Create_Maf</a>
-        <a>--- </a>
+        <a>---</a>
+        <a class="company" href="/brands">Brands</a>
+        <a>---</a>
+        <a class="create" href="/create_car">Create Cars</a>
+        <a>---</a>
+        <a class="create" href="/create_brands">Create Brands</a>
+        <a>---</a>
         <a class="user" href="/user">User</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
         <a class="logout-btn" href="/logout">Logout</a> <!-- Logout button -->
-
     </div>
 
-
+    <!-- Filter Form -->
+    <div class="filter-form">
+        <form action="/showCar/Brand_price" method="GET">
+            <input type="text" name="brands" placeholder="Enter brand ID">
+            <input type="number" name="price" placeholder="Enter max price">
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+    <div class="filter-form">
+        <form action="/showCar/Name" method="GET">
+            <input type="text" name="name" placeholder="Enter  name ">
+            <button type="submit">Filter by Name</button>
+        </form>
+    </div>
+    <div class="filter-form">
+        <form action="/showCar/Brand" method="GET">
+            <input type="text" name="brands" placeholder="Enter brand ID">
+            <button type="submit">Filter by Brand_id</button>
+        </form>
+    </div>
     <table>
-        <tr>
-            <th>Id_car</th>
-            <th>Model</th>
-
-        </tr>
-
-        <tr>
-            <% listUser.forEach(function(user,index) { %>
-        <tr>
-            <td>
-                <%=user.car_id%>
-            <td>
-                <%=user.model%>
-            </td>
-
-
-            <td>
-                <div class="action-buttons">
-                    <a href="/show/<%=user.car_id%>">show</a>
-                    <a href="/update/<%=user.car_id%>">Edit_Cars</a>
-                    <form action="/delete/<%= user.car_id %>?_method=DELETE" method="POST" style="display:inline;">
-                        <button type="submit">Delete_Cars</button>
-                    </form>
-
-                </div>
-            </td>
-
-        </tr>
-        <% }); %>
-
-
+        <thead>
+            <tr>
+                <th>Id_car</th>
+                <th>Model</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% listUser.forEach(function(user) { %>
+                <tr>
+                    <td>
+                        <%= user.car_id %>
+                    </td>
+                    <td>
+                        <%= user.model %>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="/show/<%=user.car_id%>">Show</a>
+                            <a href="/updateCar/<%=user.car_id%>">Edit Cars</a>
+                            <form action="/deleteCar/<%= user.car_id %>?_method=DELETE" method="POST"
+                                style="display:inline;">
+                                <button type="submit">Delete Cars</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
     </table>
 
 </body>

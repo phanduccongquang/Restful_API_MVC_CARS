@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars Information</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .topnav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/cars">Cars</a>
+        <a>---</a>
+        <a class="company" href="/brands">Brands</a>
+        <a>---</a>
+        <a class="cart" href="/cart">Shopping_Cart</a>
+    </div>
+
+    <h2>Cars Information</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id_car</th>
+                <th>Brand_id</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Price</th>
+                <th>Conditions</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% listUser.forEach(function(user) { %>
+                <tr>
+                    <td>
+                        <%= user.car_id %>
+                    </td>
+                    <td>
+                        <%= user.brand_id %>
+                    </td>
+                    <td>
+                        <%= user.model %>
+                    </td>
+                    <td>
+                        <%= user.year %>
+                    </td>
+                    <td>
+                        <%= user.price %>
+                    </td>
+                    <td>
+                        <%= user.conditions %>
+                    </td>
+                    <td>
+                        <%= user.type %>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
