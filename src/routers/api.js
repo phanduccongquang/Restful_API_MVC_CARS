@@ -21,7 +21,196 @@ const routeAPI = express.Router()
  *       scheme: bearer
  *       bearerFormat: JWT
  * 
+ *   schemas:
+ *     user:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: "ID of the user"
+ *           example: 1
+ *         name:
+ *           type: string
+ *           description: "Name of the user"
+ *           example: "John Doe"
+ *         email:
+ *           type: string
+ *           description: "Email of the user"
+ *           example: "john.doe@example.com"
+ *         phone:
+ *           type: string
+ *           description: "Phone number of the user"
+ *           example: "123-456-7890"
+ *         address:
+ *           type: string
+ *           description: "Address of the user"
+ *           example: "123 Main Street, Cityville"
+ *         role_id:
+ *           type: integer
+ *           description: "Role ID of the user"
+ *           example: 2
+ *     car_brands:
+ *       type: object
+ *       properties:
+ *         brand_id:
+ *           type: string
+ *           description: "ID of the car brand"
+ *           example: "H001"
+ *         name:
+ *           type: string
+ *           description: "Name of the car brand"
+ *           example: "Honda"
+ *     cars:
+ *       type: object
+ *       properties:
+ *         car_id:
+ *           type: string
+ *           description: "ID of the car"
+ *           example: "C12345"
+ *         brand_id:
+ *           type: string
+ *           description: "ID of the brand"
+ *           example: "H001"
+ *         model:
+ *           type: string
+ *           description: "Car model"
+ *           example: "Civic"
+ *         year:
+ *           type: integer
+ *           description: "Year of manufacture"
+ *           example: 2020
+ *         price:
+ *           type: integer
+ *           description: "Price of the car"
+ *           example: 20000
+ *         conditions:
+ *           type: string
+ *           description: "Condition of the car"
+ *           example: "New"
+ *         type:
+ *           type: string
+ *           description: "Type of the car"
+ *           example: "Sedan"
+ *     shopping_cart:
+ *       type: object
+ *       properties:
+ *         cart_id:
+ *           type: integer
+ *           description: "ID of the shopping cart"
+ *           example: 101
+ *         user_id:
+ *           type: integer
+ *           description: "User ID associated with the shopping cart"
+ *           example: 1
+ *     cart_items:
+ *       type: object
+ *       properties:
+ *         cart_item_id:
+ *           type: integer
+ *           description: "ID of the cart item"
+ *           example: 1
+ *         cart_id:
+ *           type: integer
+ *           description: "Cart ID associated with the cart item"
+ *           example: 101
+ *         car_id:
+ *           type: string
+ *           description: "Car ID associated with the cart item"
+ *           example: "C12345"
+ *         quantity:
+ *           type: integer
+ *           description: "Quantity of the car in the cart"
+ *           example: 2
+ *     orders:
+ *       type: object
+ *       properties:
+ *         order_id:
+ *           type: integer
+ *           description: "ID of the order"
+ *           example: 1001
+ *         user_id:
+ *           type: integer
+ *           description: "User ID who made the order"
+ *           example: 1
+ *         status:
+ *           type: string
+ *           description: "Status of the order"
+ *           example: "Processing"
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *           description: "Creation timestamp of the order"
+ *           example: "2024-12-02T10:00:00Z"
+ *     order_items:
+ *       type: object
+ *       properties:
+ *         order_item_id:
+ *           type: integer
+ *           description: "ID of the order item"
+ *           example: 5001
+ *         order_id:
+ *           type: integer
+ *           description: "Order ID associated with the order item"
+ *           example: 1001
+ *         car_id:
+ *           type: string
+ *           description: "Car ID associated with the order item"
+ *           example: "C12345"
+ *         quantity:
+ *           type: integer
+ *           description: "Quantity of the car in the order"
+ *           example: 1
+ *     payments:
+ *       type: object
+ *       properties:
+ *         payment_id:
+ *           type: integer
+ *           description: "ID of the payment"
+ *           example: 5001
+ *         order_id:
+ *           type: integer
+ *           description: "Order ID associated with the payment"
+ *           example: 1001
+ *         amount:
+ *           type: number
+ *           format: float
+ *           description: "Amount paid"
+ *           example: 20000.00
+ *         payment_date:
+ *           type: string
+ *           format: date-time
+ *           description: "Date and time of the payment"
+ *           example: "2024-12-02T10:30:00Z"
+ *     reviews:
+ *       type: object
+ *       properties:
+ *         review_id:
+ *           type: integer
+ *           description: "ID of the review"
+ *           example: 2001
+ *         car_id:
+ *           type: string
+ *           description: "Car ID associated with the review"
+ *           example: "C12345"
+ *         user_id:
+ *           type: integer
+ *           description: "User ID who made the review"
+ *           example: 1
+ *         rating:
+ *           type: integer
+ *           description: "Rating given by the user"
+ *           example: 5
+ *         comment:
+ *           type: string
+ *           description: "Comment made by the user"
+ *           example: "Great car, highly recommend!"
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *           description: "Date and time when the review was created"
+ *           example: "2024-12-02T11:00:00Z"
  */
+
 
 /**
  * @swagger
