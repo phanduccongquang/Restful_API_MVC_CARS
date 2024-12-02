@@ -291,6 +291,7 @@ const SearchCars_Brand = async (req, res) => {
 const getShopping_cart = async (req, res) => {
     try {
         const userId = req.userId;
+        console.log("check userId", userId);
         const data = await getShopping(userId);
         console.log("check datta", data);
 
