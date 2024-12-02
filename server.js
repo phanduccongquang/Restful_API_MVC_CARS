@@ -52,7 +52,7 @@ const options = {
         },
         servers: [
             {
-                url: "https://resfulapi-mvc-3.onrender.com/v1",
+                url: "https://restful-api-mvc-cars.onrender.com",
                 // url: "http://localhost:3000/v1",
             },
         ],
