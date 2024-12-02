@@ -81,6 +81,7 @@ routeAPI.get('/listUser', authenticateToken, authorizeRole(['admin', 'user']), c
  *             schema:
  *               type: array
  *               items:
+ *                 $ref: '#/components/schemas/user'
  * 
  */
 routeAPI.get('/listCars', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), getAllcars);
@@ -98,6 +99,7 @@ routeAPI.get('/listCars', authenticateToken, authorizeRole(['admin', 'user']), c
  *             schema:
  *               type: array
  *               items:
+ *                 $ref: '#/components/schemas/cars'
  * 
  */
 routeAPI.get('/show/:car_id', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), showDetailCar);
@@ -120,6 +122,7 @@ routeAPI.get('/show/:car_id', authenticateToken, authorizeRole(['admin', 'user']
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/cars'
  *       404:
  *         description: Không tìm thấy xe
  * 
@@ -139,6 +142,7 @@ routeAPI.get('/show', authenticateToken, authorizeRole(['admin', 'user']), cache
  *             schema:
  *               type: array
  *               items:
+ *                 $ref: '#/components/schemas/car_brands' 
  */
 routeAPI.get('/showCar/Brand_price', authenticateToken, authorizeRole(['admin', 'user']), cacheMiddleware(3600), GetCar_Brand_Price);
 /**
@@ -166,6 +170,7 @@ routeAPI.get('/showCar/Brand_price', authenticateToken, authorizeRole(['admin', 
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/cars'
  *       404:
  *         description: Không tìm thấy nhà sản xuất 
  */
@@ -189,6 +194,7 @@ routeAPI.get('/search', authenticateToken, authorizeRole(['admin', 'user']), cac
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/cars'
  *       404:
  *         description: Không tìm thấy nhà sản xuất 
  */
@@ -244,6 +250,7 @@ routeAPI.get('/orderDetails/:id', authenticateToken, authorizeRole(['admin', 'us
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/orders'
  *       404:
  *         description: Không tìm thấy đơn hàng
  */
@@ -259,6 +266,7 @@ routeAPI.post('/signup', signup);
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/user'
  *           example:
  *             name: "quangbabop"
  *             email: "anhemdeo@gmail.com"
@@ -272,6 +280,7 @@ routeAPI.post('/signup', signup);
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/user'
  *       500:
  *         description: Lỗi server
  */
@@ -288,6 +297,7 @@ routeAPI.post('/login', login);
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/user'
  *           example:
  *             email: "anhemdeo@gmail.com"
  *             password: "123"
@@ -297,6 +307,7 @@ routeAPI.post('/login', login);
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/user'
  *               type: object
  *               properties:
  *                 token:
@@ -318,12 +329,14 @@ routeAPI.post('/createCars', authenticateToken, authorizeRole(['admin']), create
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/cars'
  *     responses:
  *       200:
  *         description: Xe đã được tạo
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/cars'
  *       500:
  *         description: Lỗi server
  */
@@ -339,6 +352,7 @@ routeAPI.post('/addShoppingCart', authenticateToken, authorizeRole(['admin', 'us
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/cart_items'
  *           example:
  *             car_id: "h3"
  *             quantity: 1
@@ -348,6 +362,7 @@ routeAPI.post('/addShoppingCart', authenticateToken, authorizeRole(['admin', 'us
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/cart_items'
  *       500:
  *         description: Lỗi server
  */
@@ -363,6 +378,7 @@ routeAPI.post('/createOrder', authenticateToken, authorizeRole(['admin', 'user']
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/order_items'
  *           example:
  *             car_id: "h3"
  *             quantity: 1
@@ -372,6 +388,7 @@ routeAPI.post('/createOrder', authenticateToken, authorizeRole(['admin', 'user']
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/order_items'
  *       500:
  *         description: Lỗi server
  */
@@ -387,12 +404,14 @@ routeAPI.post('/create_brands', authenticateToken, authorizeRole(['admin']), cre
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/car_brands'
  *     responses:
  *       200:
  *         description: Nhà sản xuất đã được tạo
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/car_brands'
  *       500:
  *         description: Lỗi server 
  */
@@ -429,6 +448,7 @@ routeAPI.post('/payments/:id', authenticateToken, authorizeRole(['admin', 'user'
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/payments'
  *       500:
  *         description: Lỗi server 
  */
@@ -470,6 +490,7 @@ routeAPI.post('/addReviews/:car_id', authenticateToken, authorizeRole(['admin', 
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/reviews'
  *       500:
  *         description: Lỗi server 
  */
@@ -492,12 +513,14 @@ routeAPI.put('/updateCar/:car_id', authenticateToken, authorizeRole(['admin']), 
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/cars'
  *     responses:
  *       200:
  *         description: Xe đã được cập nhật
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/cars'
  *       404:
  *         description: Không tìm thấy xe
  *       500:
@@ -522,12 +545,14 @@ routeAPI.put('/updateShoppingCart/:car_id', authenticateToken, authorizeRole(['a
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/cart_items'
  *     responses:
  *       200:
  *         description: Số lượng xe đã được cập nhật
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/cart_items'
  *       404:
  *         description: Không thể cập nhật số lượng xe trong giỏ hàng
  *       500:
@@ -552,12 +577,14 @@ routeAPI.put('/updateBrand/:brand_id', authenticateToken, authorizeRole(['admin'
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/car_brands'
  *     responses:
  *       200:
  *         description: Nhà sản xuất đã được cập nhật
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/car_brands'
  *       404:
  *         description: Không tìm thấy nhà sản xuất
  *       500:
@@ -582,12 +609,14 @@ routeAPI.put('/updateOrderStatus/:id', authenticateToken, authorizeRole(['admin'
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/orders'
  *     responses:
  *       200:
  *         description: Trạng thái đơn hàng đã được cập nhật
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/orders'
  *       404:
  *         description: Không thể cập nhật trạng thái đơn hàng
  *       500:
@@ -631,6 +660,7 @@ routeAPI.put('/updateReview/:review_id', authenticateToken, authorizeRole(['admi
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/reviews'
  *       404:
  *         description: Không thể chỉnh sữa đánh giá
  *       500:
@@ -655,12 +685,14 @@ routeAPI.patch('/updateUser/:id', authenticateToken, updateUser)
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/user'
  *     responses:
  *       200:
  *         description: User đã được cập nhật
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/user'
  *       404:
  *         description: Không tìm thấy User
  *       500:
