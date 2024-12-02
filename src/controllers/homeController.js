@@ -292,6 +292,7 @@ const getShopping_cart = async (req, res) => {
     try {
         const userId = req.userId;
         const data = await getShopping(userId);
+        console.log("check datta", data);
 
         res.render('shopping_cart.ejs', { cartItems: data });
     } catch (error) {
