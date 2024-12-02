@@ -76,6 +76,13 @@ const signup = async (req, res) => {
     }
 
     try {
+        const [existingUser] = await connection.query(`SELECT * FROM user WHERE email = ?`, [email]);
+        if (existingUser && existingUser.length > 0) {
+            return res.status(400).json({
+                errorCode: 2,
+                message: 'Tài khoản với email này đã tồn tại. Vui lòng sử dụng email khác.'
+            });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         const role_id = 2;
 
