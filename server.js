@@ -10,7 +10,7 @@ const cors = require('cors');
 
 
 app.use(cors({
-    origin: 'https://restful-api-mvc-cars.onrender.com',
+    origin: 'https://restful-api-mvc-cars.onrender.com/v1',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -52,7 +52,7 @@ const options = {
         },
         servers: [
             {
-                url: "https://restful-api-mvc-cars.onrender.com",
+                url: "https://restful-api-mvc-cars.onrender.com/v1",
                 // url: "http://localhost:3000/v1",
             },
         ],
