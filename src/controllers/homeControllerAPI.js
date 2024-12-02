@@ -442,17 +442,14 @@ const addItemsTopShoppingCart = async (req, res) => {
             cart = await createCartForUser(user_id)
         }
         await addItemsToCart(cart.cart_id, car_id, quantity)
-        console.log("check result:", results);
         await client.del('/v1/cart');
 
         res.status(200).json({
             errorCode: 0,
         })
     } catch (error) {
-        console.error(error);
 
         res.status(500).json({ error: 'không thể thêm sản phẩm vào giỏ hàng' })
-        throw error.messages;
 
     }
 

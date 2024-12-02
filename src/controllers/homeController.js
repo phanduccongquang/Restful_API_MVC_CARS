@@ -317,7 +317,6 @@ const addItemsTopShoppingCart = async (req, res) => {
         console.error(error);
 
         res.status(500).json({ error: 'không thể thêm sản phẩm vào giỏ hàng' })
-        throw error.messages;
 
     }
 
