@@ -251,14 +251,9 @@ const updateBrand = async (req, res) => {
 }
 const updateUser = async (req, res) => {
     let id = req.params.id
-    let name = req.body.name
-    let email = req.body.email
-    let password = req.body.password
-    let phone = req.body.phone
-    let address = req.body.address
     let role_id = req.body.role_id;
     try {
-        await updateUserByID(name, email, password, phone, address, role_id, id)
+        await updateUserByID(role_id, id)
         await client.del('/v1/listUser');
         res.status(200).json({
             errorCode: 0
