@@ -157,12 +157,17 @@ const getUser = async () => {
 
 }
 const getShopping = async (userId) => {
+    const [cart] = await connection.query(`SELECT cart_id FROM shopping_cart WHERE user_id = ?`, [userId]);
+    if (!cart || cart.length === 0) {
+        return [];
+    }
+    const cartId = cart[0].cart_id;
     const [data] = await connection.query(`SELECT cars.car_id, cars.type, cars.price,
         cars.model, cars.conditions, cart_items.quantity 
         FROM cart_items 
         JOIN cars ON cart_items.car_id = cars.car_id 
         WHERE cart_items.cart_id = ?`,
-        [userId]);
+        [cartId]);
 
     return data;
 }
