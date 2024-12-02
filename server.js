@@ -10,7 +10,7 @@ const cors = require('cors');
 
 
 app.use(cors({
-    origin: ['https://resfulapi-mvc-3.onrender.com', 'http://localhost:3000'],
+    origin: 'https://resfulapi-mvc-3.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
